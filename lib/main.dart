@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'user_role_provider.dart'; 
-
+import 'user_role_provider.dart';
 import 'home_screen.dart'; 
 import 'admin_dashboard.dart';
 import 'view_recent_posts_screen.dart'; 

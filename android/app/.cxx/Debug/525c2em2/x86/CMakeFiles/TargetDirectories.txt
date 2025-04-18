@@ -1,0 +1,2 @@
+D:/disaster_management_app/android/app/.cxx/Debug/525c2em2/x86/CMakeFiles/edit_cache.dir
+D:/disaster_management_app/android/app/.cxx/Debug/525c2em2/x86/CMakeFiles/rebuild_cache.dir
