@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -53,11 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCNuvNE7UkPYl4Cs6Dd5uHH92KZPc-uT28',
-    appId: '1:59100974306:android:a14aa24142f514ab35e2bb',
-    messagingSenderId: '59100974306',
-    projectId: 'disaster-management-app-272a7',
-    databaseURL: 'https://disaster-management-app-272a7-default-rtdb.firebaseio.com',
-    storageBucket: 'disaster-management-app-272a7.appspot.com',
+    apiKey: 'AIzaSyCEz1OvFQrmWvbNa3xlw99FhjZlnSPpccw',
+    appId: '1:212600632249:android:d9be2447ee09e6bef67c68',
+    messagingSenderId: '212600632249',
+    projectId: 'disastermanagementapp-d9ee3',
+    storageBucket: 'disastermanagementapp-d9ee3.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAlyUSHVMgRZen5sjHGLXBkVzbqEe06tiE',
+    appId: '1:212600632249:web:bb23b38fc7ef8826f67c68',
+    messagingSenderId: '212600632249',
+    projectId: 'disastermanagementapp-d9ee3',
+    authDomain: 'disastermanagementapp-d9ee3.firebaseapp.com',
+    storageBucket: 'disastermanagementapp-d9ee3.firebasestorage.app',
+    measurementId: 'G-MNPQ77SXJE',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyD8GkunhJvS2D-Gj-OPSkpaB7jD63HFhHg',
+    appId: '1:212600632249:ios:b74125830d8c1699f67c68',
+    messagingSenderId: '212600632249',
+    projectId: 'disastermanagementapp-d9ee3',
+    storageBucket: 'disastermanagementapp-d9ee3.firebasestorage.app',
+    iosBundleId: 'com.example.disasterManagementApp',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyD8GkunhJvS2D-Gj-OPSkpaB7jD63HFhHg',
+    appId: '1:212600632249:ios:b74125830d8c1699f67c68',
+    messagingSenderId: '212600632249',
+    projectId: 'disastermanagementapp-d9ee3',
+    storageBucket: 'disastermanagementapp-d9ee3.firebasestorage.app',
+    iosBundleId: 'com.example.disasterManagementApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAlyUSHVMgRZen5sjHGLXBkVzbqEe06tiE',
+    appId: '1:212600632249:web:6821770fd6212413f67c68',
+    messagingSenderId: '212600632249',
+    projectId: 'disastermanagementapp-d9ee3',
+    authDomain: 'disastermanagementapp-d9ee3.firebaseapp.com',
+    storageBucket: 'disastermanagementapp-d9ee3.firebasestorage.app',
+    measurementId: 'G-Y83ZZTRVCK',
+  );
+
 }

@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-import 'user_role_provider.dart';
-import 'home_screen.dart'; 
-import 'admin_dashboard.dart';
-import 'view_recent_posts_screen.dart'; 
-import 'view_disaster_locations_screen.dart'; 
-import 'suggest_solutions_screen.dart';  
-import 'user_dashboard.dart'; 
-import 'public_queries.dart'; 
-import 'about.dart'; 
-import 'contact.dart'; 
-import 'help_support.dart';
-import 'chat_screen.dart'; 
-import 'login_screen.dart';
-import 'register_screen.dart';
-import 'profile.dart';
-import 'view_profile_screen.dart';
-import 'edit_profile_screen.dart';
-import 'change_password_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'core/utils/user_role_provider.dart';
+import 'routes/app_routes.dart';
+import 'features/auth/screens/login_screen.dart';
+import 'features/dashboard/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const DisasterManagementApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DisasterManagementApp extends StatelessWidget {
+  const DisasterManagementApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,25 +33,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const AuthCheck(),
-        routes: {
-          '/admin': (context) => const AdminDashboard(),
-          '/admin/recent_posts': (context) => const ViewRecentPostsScreen(),
-          '/admin/disaster_locations': (context) => const ViewDisasterLocationsScreen(),
-          '/admin/suggest_solutions': (context) => const SuggestSolutionsScreen(),
-          '/user': (context) => const UserDashboard(),
-          '/public': (context) => const PublicQueries(),
-          '/profile': (context) => const Profile(),
-          '/profile/view': (context) => const ViewProfileScreen(),
-          '/profile/edit': (context) => const EditProfileScreen(),
-          '/profile/change_password': (context) => const ChangePasswordScreen(),
-          '/about': (context) => const About(),
-          '/contact': (context) => const Contact(),
-          '/help': (context) => const HelpSupport(),
-          '/home': (context) => const HomeScreen(),
-          '/chat': (context) => const ChatScreen(), 
-          '/login': (context) => const LoginScreen(),
-          '/register': (context) => const RegisterScreen(),
-        },
+        routes: AppRoutes.routes,
       ),
     );
   }
@@ -71,14 +43,14 @@ class AuthCheck extends StatefulWidget {
   const AuthCheck({super.key});
 
   @override
-  _AuthCheckState createState() => _AuthCheckState();
+  State<AuthCheck> createState() => _AuthCheckState();
 }
 
 class _AuthCheckState extends State<AuthCheck> {
   @override
   void initState() {
     super.initState();
-    // Ensure UserRoleProvider loads the role when the widget is initialized
+    // Load user role after the first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<UserRoleProvider>(context, listen: false).loadUserRole();
     });
@@ -89,23 +61,33 @@ class _AuthCheckState extends State<AuthCheck> {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        // Check if the connection is active
         if (snapshot.connectionState == ConnectionState.active) {
-          User? user = snapshot.data;
+          final user = snapshot.data;
           if (user == null) {
+            // If the user is not logged in, show the login screen
             return const LoginScreen();
           } else {
+            // If the user is logged in, check their role
             return Consumer<UserRoleProvider>(
               builder: (context, userRoleProvider, child) {
                 if (userRoleProvider.isLoading) {
-                  return const CircularProgressIndicator(); // Show a loading indicator
+                  // Show a loading indicator while fetching the role
+                  return const Scaffold(
+                    body: Center(child: CircularProgressIndicator()),
+                  );
                 } else {
-                  return const HomeScreen(); // Navigate to the home screen after role is loaded
+                  // Navigate to the home screen after role is loaded
+                  return const HomeScreen();
                 }
               },
             );
           }
         } else {
-          return const CircularProgressIndicator();
+          // Show a loading indicator while checking authentication state
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
       },
     );

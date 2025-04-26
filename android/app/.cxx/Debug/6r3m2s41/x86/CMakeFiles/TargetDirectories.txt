@@ -1,0 +1,2 @@
+D:/projects/mobile_programming/flutter_dart/disaster_management_app/android/app/.cxx/Debug/6r3m2s41/x86/CMakeFiles/edit_cache.dir
+D:/projects/mobile_programming/flutter_dart/disaster_management_app/android/app/.cxx/Debug/6r3m2s41/x86/CMakeFiles/rebuild_cache.dir
